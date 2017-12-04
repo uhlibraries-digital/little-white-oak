@@ -49,7 +49,7 @@ def updatePMArk(ark, uuid):
     minter_key = config.get('MCPClient', 'minterApiKey')
     minter_ambaseurl = config.get('MCPClient', 'minterArchivematicaUrl')
 
-    ercWhere = minter_ambaseurl + 'archival-storage/download/aip/' + uuid + '/'
+    ercWhere = minter_ambaseurl + 'archival-storage/' + uuid + '/'
     req = urllib2.Request(minter_baseurl + ark, "where=" + urllib.quote_plus(ercWhere));
     req.add_header('api-key', minter_key)
     req.get_method = lambda: 'PUT'
