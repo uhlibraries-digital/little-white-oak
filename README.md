@@ -14,7 +14,7 @@ The following fields must be given in the metadata.csv file found in the SIP tra
 
 ## postPmArkToArchivesSpace.py
 
-Posts the PM Ark to a archival objects External Document in [ArchivesSpace](http://archivesspace.org/).
+Posts the PM Ark to a Digital Object that is attached to the archival object in [ArchivesSpace](http://archivesspace.org/).
 
 The following fields must be given in the metadata.csv file found in the SIP transfer package:
 
