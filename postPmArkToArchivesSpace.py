@@ -85,8 +85,8 @@ def post_pm_ark(data):
     archival_object = aspace_request(data['uri'])
 
     # Need to check if the archival object already has a PM Ark
-    if has_pm_ark(archival_object['instances']):
-        print("Archival Object already has a PM Ark")
+    if has_pm_ark(archival_object['instances'], data['ark']):
+        print("Archival Object already has a PM Ark of " + data['ark'])
         return
 
     response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', json.dumps(new_digital_object))
@@ -125,12 +125,13 @@ def post_pm_ark(data):
 
 
 
-def has_pm_ark(instances):
+def has_pm_ark(instances, ark):
+    ark = ark.replace('/', '\/')
     for instance in instances:
         if instance['instance_type'] == 'digital_object':
             do = aspace_request(instance['digital_object']['ref'])
             for do_file in do['file_versions']:
-                if re.match('^.*ark:\/\d+\/pm.*$', do_file['file_uri']):
+                if re.match('^.*' + ark + '$', do_file['file_uri']):
                     return True
     return False
 
