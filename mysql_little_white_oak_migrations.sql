@@ -17,7 +17,7 @@ INSERT INTO StandardTasksConfigs (pk, execute, arguments) VALUES (@UpdatePmArkST
 INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES (@UpdatePmArkTC, '36b2e239-4a57-4aa5-8ebc-7a29139baca6', @UpdatePmArkSTC, 'Update PM Ark erc.where');
 
 -- Update to inject task into MicroServiceChainLinks
-INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@UpdatePMArkMCL, 'Update PM Ark', @UpdatePmArkTC, 'Failed', @FailedMC);
+INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@UpdatePMArkMCL, 'Update PM Ark', @UpdatePmArkTC, 'Failed', @FailedMCL);
 INSERT INTO MicroServiceChainLinksExitCodes (pk, microServiceChainLink, exitCode, exitMessage, nextMicroServiceChainLink) VALUES (@UpdatePMArkMCLEC, @UpdatePMArkMCL, 0, 'Completed successfully', @PostPmArkMCL);
 UPDATE MicroServiceChainLinksExitCodes SET nextMicroServiceChainLink = @UpdatePMArkMCL WHERE pk = '4d703bf8-12ce-4fe7-9ddc-4dac274d8424';
 
@@ -25,5 +25,5 @@ UPDATE MicroServiceChainLinksExitCodes SET nextMicroServiceChainLink = @UpdatePM
 INSERT INTO StandardTasksConfigs (pk, execute, arguments) VALUES (@PostPmArkSTC, 'postPmArkToArchivesSpace_v0.0', '"%SIPDirectory%"');
 INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES (@PostPmArkTC, '36b2e239-4a57-4aa5-8ebc-7a29139baca6', @PostPmArkSTC, 'Post PM Ark to ArchivesSpace');
 
-INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@PostPmArkMCL, 'Update PM Ark', @PostPmArkTC, 'Failed', @FailedMC);
+INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@PostPmArkMCL, 'Update PM Ark', @PostPmArkTC, 'Failed', @FailedMCL);
 INSERT INTO MicroServiceChainLinksExitCodes (pk, microServiceChainLink, exitCode, exitMessage, nextMicroServiceChainLink) VALUES (@PostPmArkMCLEC, @PostPmArkMCL, 0, 'Completed successfully', 'f1e286f9-4ec7-4e19-820c-dae7b8ea7d09');
