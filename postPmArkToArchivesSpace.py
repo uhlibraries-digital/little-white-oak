@@ -89,7 +89,15 @@ def post_pm_ark(data):
         print("Archival Object already has a PM Ark of " + data['ark'])
         return
 
-    response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', json.dumps(new_digital_object))
+    try:
+        response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', json.dumps(new_digital_object))
+    except UnicodeDecodeError:
+        print("Unable to post digital object. You have non-utf8 characters in you metadata.csv file: ",new_digital_object,file=sys.stderr)
+        sys.exit(1)
+    except:
+        print ("Unable to post digital object",file=sys.stderr)
+        sys.exit(1)
+
     new_instance = {
         "jsonmodel_type": "instance",
         "digital_object": {
