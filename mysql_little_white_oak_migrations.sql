@@ -12,6 +12,13 @@ SET @PostPmArkMCLEC = '274629b9-b39f-458c-a9eb-36461040f1c8';
 
 SET @FailedMCL = '7d728c39-395f-4892-8193-92f086c0546f';
 
+-- Insert the post pm ark to ArchivesSpace task
+INSERT INTO StandardTasksConfigs (pk, execute, arguments) VALUES (@PostPmArkSTC, 'postPmArkToArchivesSpace_v0.0', '"%SIPDirectory%"');
+INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES (@PostPmArkTC, '36b2e239-4a57-4aa5-8ebc-7a29139baca6', @PostPmArkSTC, 'Post PM Ark to ArchivesSpace');
+
+INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@PostPmArkMCL, 'Update PM Ark', @PostPmArkTC, 'Failed', @FailedMCL);
+INSERT INTO MicroServiceChainLinksExitCodes (pk, microServiceChainLink, exitCode, exitMessage, nextMicroServiceChainLink) VALUES (@PostPmArkMCLEC, @PostPmArkMCL, 0, 'Completed successfully', 'f1e286f9-4ec7-4e19-820c-dae7b8ea7d09');
+
 -- Insert the update pm ark task
 INSERT INTO StandardTasksConfigs (pk, execute, arguments) VALUES (@UpdatePmArkSTC, 'updatePmArkErcWhere_v0.0', '"%SIPDirectory%" "%SIPUUID%"');
 INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES (@UpdatePmArkTC, '36b2e239-4a57-4aa5-8ebc-7a29139baca6', @UpdatePmArkSTC, 'Update PM Ark erc.where');
@@ -20,10 +27,3 @@ INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES
 INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@UpdatePMArkMCL, 'Update PM Ark', @UpdatePmArkTC, 'Failed', @FailedMCL);
 INSERT INTO MicroServiceChainLinksExitCodes (pk, microServiceChainLink, exitCode, exitMessage, nextMicroServiceChainLink) VALUES (@UpdatePMArkMCLEC, @UpdatePMArkMCL, 0, 'Completed successfully', @PostPmArkMCL);
 UPDATE MicroServiceChainLinksExitCodes SET nextMicroServiceChainLink = @UpdatePMArkMCL WHERE pk = '4d703bf8-12ce-4fe7-9ddc-4dac274d8424';
-
--- Insert the post pm ark to ArchivesSpace task
-INSERT INTO StandardTasksConfigs (pk, execute, arguments) VALUES (@PostPmArkSTC, 'postPmArkToArchivesSpace_v0.0', '"%SIPDirectory%"');
-INSERT INTO TasksConfigs (pk, taskType, taskTypePKReference, description) VALUES (@PostPmArkTC, '36b2e239-4a57-4aa5-8ebc-7a29139baca6', @PostPmArkSTC, 'Post PM Ark to ArchivesSpace');
-
-INSERT INTO MicroServiceChainLinks (pk, microserviceGroup, currentTask, defaultExitMessage, defaultNextChainLink) VALUES (@PostPmArkMCL, 'Update PM Ark', @PostPmArkTC, 'Failed', @FailedMCL);
-INSERT INTO MicroServiceChainLinksExitCodes (pk, microServiceChainLink, exitCode, exitMessage, nextMicroServiceChainLink) VALUES (@PostPmArkMCLEC, @PostPmArkMCL, 0, 'Completed successfully', 'f1e286f9-4ec7-4e19-820c-dae7b8ea7d09');
