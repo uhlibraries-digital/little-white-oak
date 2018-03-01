@@ -116,6 +116,7 @@ def post_pm_ark(data):
         "linked_events": archival_object['linked_events'],
         "extents": archival_object['extents'],
         "dates": archival_object['dates'],
+        "publish": archival_object['publish'],
         "external_documents": archival_object['external_documents'],
         "rights_statements": archival_object['rights_statements'],
         "linked_agents": archival_object['linked_agents'],
