@@ -108,29 +108,8 @@ def post_pm_ark(data):
     }
 
     archival_object['instances'].append(new_instance)
-    changed_object = {
-        "jsonmodel_type": "archival_object",
-        "lock_version": archival_object['lock_version'],
-        "external_ids": archival_object['external_ids'],
-        "subjects": archival_object['subjects'],
-        "linked_events": archival_object['linked_events'],
-        "extents": archival_object['extents'],
-        "dates": archival_object['dates'],
-        "publish": archival_object['publish'],
-        "external_documents": archival_object['external_documents'],
-        "rights_statements": archival_object['rights_statements'],
-        "linked_agents": archival_object['linked_agents'],
-        "restrictions_apply": archival_object['restrictions_apply'],
-        "ancestors": archival_object['ancestors'],
-        "instances": archival_object['instances'],
-        "notes": archival_object['notes'],
-        "ref_id": archival_object['ref_id'],
-        "level": archival_object['level'],
-        "title": archival_object['title'],
-        "resource": archival_object['resource']
-    }
 
-    response = aspace_request(data['uri'], json.dumps(changed_object))
+    response = aspace_request(data['uri'], json.dumps(archival_object))
 
 
 
