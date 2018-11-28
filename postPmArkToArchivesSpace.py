@@ -72,15 +72,16 @@ def post_pm_ark(data):
                 "file_format_name": "",
                 "file_format_version": "",
                 "checksum": "",
-                "checksum_method": ""
-
+                "checksum_method": "",
+                "publish": False
             }
         ],
         "restrictions": False,
         "notes": [],
         "linked_instances": [],
         "title": data['title'] + " (Preservation)",
-        "language": ""
+        "language": "",
+        "publish": False
     }
     archival_object = aspace_request(data['uri'])
 
