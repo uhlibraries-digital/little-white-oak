@@ -5,10 +5,8 @@
 #
 # @author Sean Watkins <slwatkins@uh.edu>
 
-from __future__ import print_function
 import ConfigParser
 import sys
-import logging
 import re
 import urllib, urllib2
 import json
@@ -20,12 +18,17 @@ django.setup()
 # archivematicaCommon
 import archivematicaFunctions
 from archivematicaCreateMETSMetadataCSV import parseMetadata
-from custom_handlers import get_script_logger
 
-def get_pm_ark_and_aspace_uri(baseDirectory):
-    metadata = parseMetadata(baseDirectory)
+aspace_endpoint = ''
+aspace_username = ''
+aspace_password = ''
+minter_base     = ''
+session         = ''
+
+def get_pm_ark_and_aspace_uri(job, baseDirectory):
+    metadata = parseMetadata(job, baseDirectory, {})
     if not metadata:
-        return '';
+        return ''
 
     ark = ''
     uri = ''
@@ -48,7 +51,8 @@ def get_pm_ark_in_values(values):
 
     return ''
 
-def post_pm_ark(data):
+def post_pm_ark(job, data):
+    global minter_base
 
     new_digital_object = {
         "jsonmodel_type": "digital_object",
@@ -87,17 +91,17 @@ def post_pm_ark(data):
 
     # Need to check if the archival object already has a PM Ark
     if has_pm_ark(archival_object['instances'], data['ark']):
-        print("Archival Object already has a PM Ark of " + data['ark'])
-        return
+        job.pyprint("Archival Object already has a PM Ark of {}".format(data['ark']))
+        return 0
 
     try:
         response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', json.dumps(new_digital_object))
     except UnicodeDecodeError:
-        print("Unable to post digital object. You have non-utf8 characters in you metadata.csv file: ",new_digital_object,file=sys.stderr)
-        sys.exit(1)
+        job.pyprint("Unable to post digital object. You have non-utf8 characters in you metadata.csv file: {}".format(new_digital_object),file=sys.stderr)
+        return 1
     except:
-        print ("Unable to post digital object",file=sys.stderr)
-        sys.exit(1)
+        job.pyprint ("Unable to post digital object",file=sys.stderr)
+        return 1
 
     new_instance = {
         "jsonmodel_type": "instance",
@@ -112,6 +116,7 @@ def post_pm_ark(data):
 
     response = aspace_request(data['uri'], json.dumps(archival_object))
 
+    return 0
 
 
 def has_pm_ark(instances, ark):
@@ -125,7 +130,9 @@ def has_pm_ark(instances, ark):
     return False
 
 
-def get_aspace_session():
+def get_aspace_session(job):
+    global aspace_endpoint, aspace_username, aspace_password
+
     url = aspace_endpoint + '/users/' + aspace_username + '/login'
     req = urllib2.Request(url, "password=" + urllib.quote_plus(aspace_password))
     req.add_header("Content-Type",'application/x-www-form-urlencoded')
@@ -135,12 +142,14 @@ def get_aspace_session():
     data = json.loads(data_response)
 
     if data['session'] == '':
-        print("Failed to log into ArchivesSpace: ",data,file=sys.stderr)
-        sys.exit(1)
+        job.pyprint("Failed to log into ArchivesSpace: {}".format(data),file=sys.stderr)
+        return ''
 
     return data['session']
 
 def aspace_request(uri, data=None):
+    global aspace_endpoint, session
+
     url = aspace_endpoint + uri
 
     req = urllib2.Request(url, data)
@@ -150,31 +159,44 @@ def aspace_request(uri, data=None):
     return json.loads(response.read())
 
 
-if __name__ == '__main__':
-    logger = get_script_logger("archivematica.mcp.client.postPmArkToArchivesSpace")
+def post_aspace(job):
+    global aspace_endpoint, aspace_username, aspace_password, minter_base, session
 
-    data = get_pm_ark_and_aspace_uri(sys.argv[1])
+    baseDirectory = job.args[1]
+
+    data = get_pm_ark_and_aspace_uri(job, baseDirectory)
     if data == '':
-        print("Why do I bother since there is no metadata.csv to look at")
-        sys.exit(0)
+        job.pyprint("Why do I bother since there is no metadata.csv to look at")
+        return 0
     if data['ark'] == '':
-        print("No PM Ark to post. Move along, nothing to see here.")
-        sys.exit(0)
+        job.pyprint("No PM Ark to post. Move along, nothing to see here.")
+        return 0
     if data['uri'] == '':
-        print("No ArchivesSpace uri found. Move along, nothing to see here")
-        sys.exit(0)
+        job.pyprint("No ArchivesSpace uri found. Move along, nothing to see here")
+        return 0
 
-    print("Found PM Ark:", data['ark'])
-    print("Found ASpace Uri:", data['uri'])
+    job.pyprint("Found PM Ark: {}".format(data['ark']))
+    job.pyprint("Found ASpace Uri: {}".format(data['uri']))
 
     client_config_path = '/etc/archivematica/MCPClient/clientConfig.conf'
     config = ConfigParser.SafeConfigParser()
     config.read(client_config_path)
 
-    aspace_endpoint = config.get('MCPClient', 'aSpaceApiEndpoint')
-    aspace_username = config.get('MCPClient', 'aSpaceUsername')
-    aspace_password = config.get('MCPClient', 'aSpacePassword')
-    minter_base     = config.get('MCPClient', 'minterBaseUrl')
+    aspace_endpoint = config.get('aspace', 'api_endpoint')
+    aspace_username = config.get('aspace', 'username')
+    aspace_password = config.get('aspace', 'password')
+    minter_base     = config.get('minter', 'base_url')
 
-    session = get_aspace_session()
-    post_pm_ark(data)
+    session = get_aspace_session(job)
+    if session == '':
+        return 1
+
+    return_status = post_pm_ark(job, data)
+
+    return return_status
+
+
+def call(jobs):
+    for job in jobs:
+        with job.JobContext():
+            job.set_status(post_aspace(job))

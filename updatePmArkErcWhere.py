@@ -5,12 +5,10 @@
 #
 # @author Sean Watkins <slwatkins@uh.edu>
 
-from __future__ import print_function
-import ConfigParser
 import sys
-import logging
 import re
 import urllib, urllib2
+import ConfigParser
 
 import django
 django.setup()
@@ -18,12 +16,11 @@ django.setup()
 # archivematicaCommon
 import archivematicaFunctions
 from archivematicaCreateMETSMetadataCSV import parseMetadata
-from custom_handlers import get_script_logger
 
-def get_pm_ark(baseDirectory):
-    metadata = parseMetadata(baseDirectory)
+def get_pm_ark(job, baseDirectory):
+    metadata = parseMetadata(job, baseDirectory, {})
     if not metadata:
-        return '';
+        return ''
 
     ark = ''
     for entry, data in metadata.items():
@@ -31,7 +28,7 @@ def get_pm_ark(baseDirectory):
             if name == 'dcterms.identifier' and ark == '':
                 ark = get_pm_ark_in_values(values)
 
-    return ark;
+    return ark
 
 def get_pm_ark_in_values(values):
     for value in values:
@@ -40,31 +37,38 @@ def get_pm_ark_in_values(values):
 
     return ''
 
-def updatePMArk(ark, uuid):
+def updatePMArk(job, uuid, ark):
     client_config_path = '/etc/archivematica/MCPClient/clientConfig.conf'
     config = ConfigParser.SafeConfigParser()
     config.read(client_config_path)
 
-    minter_baseurl = config.get('MCPClient', 'minterUpdateUrl')
-    minter_key = config.get('MCPClient', 'minterApiKey')
-    minter_ambaseurl = config.get('MCPClient', 'minterArchivematicaUrl')
+    minter_baseurl = config.get('minter', 'update_url')
+    minter_key = config.get('minter', 'api_key')
+    minter_ambaseurl = config.get('minter', 'archivematica_url')
 
     ercWhere = minter_ambaseurl + 'archival-storage/' + uuid + '/'
-    req = urllib2.Request(minter_baseurl + ark, "where=" + urllib.quote_plus(ercWhere));
+    req = urllib2.Request(minter_baseurl + ark, "where=" + urllib.quote_plus(ercWhere))
     req.add_header('api-key', minter_key)
     req.get_method = lambda: 'PUT'
     response = urllib2.urlopen(req)
-    print("PM Ark Update Response:", response.read())
+    job.pyprint("PM Ark Update Response: {}".format(response.read()))
 
+def update_aspace(job):
+    baseDirectory = job.args[1]
+    uuid = job.args[2]
 
-if __name__ == '__main__':
-    logger = get_script_logger("archivematica.mcp.client.updatePmArkErcWhere")
-
-    ark = get_pm_ark(sys.argv[1])
+    ark = get_pm_ark(job, baseDirectory)
     if ark == '':
-        print("No PM Ark to update. Move along, nothing to see here.")
-        sys.exit(0)
+        job.pyprint("No PM Ark to update. Move along, nothing to see here.")
+        return 0
 
-    print("Found PM Ark:", ark)
+    job.pyprint("Found PM Ark: {}".format(ark))
+    updatePMArk(job, uuid, ark)
 
-    updatePMArk(ark, sys.argv[2])
+    return 0
+
+
+def call(jobs):
+    for job in jobs:
+        with job.JobContext():
+            job.set_status(update_aspace(job))

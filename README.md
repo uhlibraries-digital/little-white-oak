@@ -2,6 +2,10 @@
 
 A collection of Archivematica scripts to handle SIP ingests
 
+## Requirements
+
+Archivematica 1.9
+
 ## updatePmArkErcWhere.py
 
 Updates a PM Ark erc.where in [Greens](https://github.com/uhlibraries-digital/greens) to the AIP download location.
@@ -44,13 +48,16 @@ updatePmArkErcWhere_v0.0 = %clientScriptsDirectory%updatePmArkErcWhere.py
 Add the following configuration options to your MCPClient config `/etc/archivematica/MCPClient/clientConfig.conf`
 
 ```
-minterBaseUrl = <Greens Base url>
-minterUpdateUrl = <Greens Ark api update url>
-minterApiKey = <Greens API KEY>
-minterArchivematicaUrl = <Archivematica base url>
-aSpaceApiEndpoint = <ArchivesSpace API Endpoint>
-aSpaceUsername = <ArchivesSpace username>
-aSpacePassword = <ArchivesSpace password>
+[minter]
+base_url = <Greens Base url>
+update_url = <Greens Ark api update url>
+api_key = <Greens API KEY>
+archivematica_url = <Archivematica base url>
+
+[aspace]
+api_endpoint = <ArchivesSpace API Endpoint>
+username = <ArchivesSpace username>
+password = <ArchivesSpace password>
 ```
 
 Restart Archivematica to accept the changes
