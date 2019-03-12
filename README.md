@@ -41,8 +41,9 @@ database. Always make a backup of your databases.
 Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`. The `archivematicaClientModules` list is in alphabetical order.
 
 ```
-postPmArkToArchivesSpace_v0.0 = %clientScriptsDirectory%postPmArkToArchivesSpace.py
-updatePmArkErcWhere_v0.0 = %clientScriptsDirectory%updatePmArkErcWhere.py
+postPmArkToArchivesSpace_v0.0 = postPmArkToArchivesSpace 
+updatePmArkErcWhere_v0.0 = updatePmArkErcWhere
+
 ```
 
 Add the following configuration options to your MCPClient config `/etc/archivematica/MCPClient/clientConfig.conf`
