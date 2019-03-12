@@ -38,7 +38,7 @@ database. Always make a backup of your databases.
 # mysql -uroot MCP < mysql_little_white_oak_migrations.sql
 ```
 
-Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`. The `archivematicaClientModules` list is in alphabetical order.
+Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`.
 
 ```
 postPmArkToArchivesSpace_v0.0 = postPmArkToArchivesSpace 
