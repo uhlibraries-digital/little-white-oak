@@ -31,12 +31,7 @@ The following fields must be given in the metadata.csv file found in the SIP tra
 
 Copy `updatePmArkErcWhere.py` and `postPmArkToArchivesSpace.py` to `/usr/lib/archivematica/MCPClient/clientScripts`.
 
-Run the `mysql_little_white_oak_migrations.sql` file into the Archivematica
-database. Always make a backup of your databases.
-
-```
-# mysql -uroot MCP < mysql_little_white_oak_migrations.sql
-```
+Copy `workflow.json` to `/usr/lib/archivematica/MCPServer/assets` replacing existing file after making a backup.
 
 Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`.
 
