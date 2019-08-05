@@ -63,6 +63,7 @@ def post_pm_ark(job, data):
     digital_object = get_digital_object(archival_object['instances'], data['do_uuid'])
     if digital_object == None:
         new_digital_object = True
+        job.pyprint("Creating new digital object with UUID: {}".format(data['do_uuid']))
         digital_object = {
             "jsonmodel_type": "digital_object",
             "digital_object_id": data['do_uuid'],
@@ -80,8 +81,10 @@ def post_pm_ark(job, data):
             "linked_instances": [],
             "title": data['title'],
             "language": "",
-            "publish": False
+            "publish": True
         }
+    else:
+        job.pyprint("Using existing digital object with UUID: {}".format(data['do_uuid']))
 
     # Need to check if the archival object already has a PM Ark
     if has_pm_ark(digital_object['file_versions'], data['ark']):
@@ -109,7 +112,7 @@ def post_pm_ark(job, data):
             job.pyprint("Unable to post digital object. You have non-utf8 characters in you metadata.csv file: {}".format(digital_object),file=sys.stderr)
             return 1
         except:
-            job.pyprint ("Unable to post digital object",file=sys.stderr)
+            job.pyprint ("Unable to post digital object, make sure it doesn't already exist elsewhere in ASpace",file=sys.stderr)
             return 1
 
         archival_object['instances'].append({
@@ -124,6 +127,7 @@ def post_pm_ark(job, data):
         response = aspace_request(data['uri'], json.dumps(archival_object))
     else:
         try:
+            job.pyprint("Updating digital object with UUID: {}".format(data['do_uuid']))
             response_do = aspace_request(digital_object['uri'], json.dumps(digital_object))
         except:
             job.pyprint("Unable to update digital object: {}".format(digital_object),file=sys.stderr)
@@ -199,6 +203,7 @@ def post_aspace(job):
 
     job.pyprint("Found PM Ark: {}".format(data['ark']))
     job.pyprint("Found ASpace Uri: {}".format(data['uri']))
+    job.pyprint("Found ASpace digital object UUID: {}".format(data['do_uuid']))
 
     client_config_path = '/etc/archivematica/MCPClient/clientConfig.conf'
     config = ConfigParser.SafeConfigParser()
