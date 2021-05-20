@@ -4,7 +4,7 @@ A collection of Archivematica scripts to handle SIP ingests
 
 ## Requirements
 
-Archivematica 1.9
+Archivematica 1.12
 
 ## updatePmArkErcWhere.py
 
@@ -31,9 +31,11 @@ The following fields must be given in the metadata.csv file found in the SIP tra
 
 Copy `updatePmArkErcWhere.py` and `postPmArkToArchivesSpace.py` to `/usr/lib/archivematica/MCPClient/clientScripts`.
 
-Copy `workflow.json` to `/usr/lib/archivematica/MCPServer/assets` replacing existing file after making a backup.
+Patch `/usr/lib/archivematica/MCPServer/assets/workflow.json` with the following command:
 
-Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`.
+`patch -c /usr/lib/archivematica/MCPServer/assets/workflow.json -i workflow.patch`
+
+Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`:
 
 ```
 postPmArkToArchivesSpace_v0.0 = postPmArkToArchivesSpace 
@@ -41,7 +43,7 @@ updatePmArkErcWhere_v0.0 = updatePmArkErcWhere
 
 ```
 
-Add the following configuration options to your MCPClient config `/etc/archivematica/MCPClient/clientConfig.conf`
+Add the following configuration options to your MCPClient config `/etc/archivematica/MCPClient/clientConfig.conf`:
 
 ```
 [minter]
