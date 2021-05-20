@@ -1,0 +1,100 @@
+*** workflow.json.orig
+--- workflow.json
+***************
+*** 5397,5407 ****
+              "exit_codes": {
+                  "0": {
+                      "job_status": "Completed successfully",
+!                     "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
+                  }
+              },
+              "fallback_job_status": "Failed",
+!             "fallback_link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09",
+              "group": {
+                  "en": "Add README file",
+                  "ja": "READMEファイルを追加",
+--- 5397,5407 ----
+              "exit_codes": {
+                  "0": {
+                      "job_status": "Completed successfully",
+!                     "link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd"
+                  }
+              },
+              "fallback_job_status": "Failed",
+!             "fallback_link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd",
+              "group": {
+                  "en": "Add README file",
+                  "ja": "READMEファイルを追加",
+***************
+*** 7062,7067 ****
+--- 7062,7095 ----
+                  "sv": "Bearbeta metadatamapp"
+              }
+          },
++         "760f721a-7a92-4566-8ab1-dd001038854d": {
++             "config": {
++                 "@manager": "linkTaskManagerDirectories",
++                 "@model": "StandardTaskConfig",
++                 "arguments": "\"%SIPDirectory%\"",
++                 "execute": "postPmArkToArchivesSpace_v0.0",
++                 "filter_file_end": null,
++                 "filter_file_start": null,
++                 "filter_subdir": null,
++                 "stderr_file": null,
++                 "stdout_file": null
++             },
++             "description": {
++                 "en": "Post PM Ark to ArchivesSpace"
++             },
++             "exit_codes": {
++                 "0": {
++                     "job_status": "Completed successfully",
++                     "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
++                 }
++             },
++             "fallback_job_status": "Failed",
++             "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
++             "group": {
++                 "en": "Update PM Ark"
++             }
++ 
++         },
+          "7677d1cd-2211-4969-8c10-5ec2a93d5c2f": {
+              "config": {
+                  "@manager": "linkTaskManagerDirectories",
+***************
+*** 8395,8400 ****
+--- 8423,8455 ----
+                  "sv": "Ladda upp DIP"
+              }
+          },
++         "93ab3b4b-57d3-41b1-8d33-f380c248eebd": {
++             "config": {
++                 "@manager": "linkTaskManagerDirectories",
++                 "@model": "StandardTaskConfig",
++                 "arguments": "\"%SIPDirectory%\" \"%SIPUUID%\"",
++                 "execute": "updatePmArkErcWhere_v0.0",
++                 "filter_file_end": null,
++                 "filter_file_start": null,
++                 "filter_subdir": null,
++                 "stderr_file": null,
++                 "stdout_file": null
++             },
++             "description": {
++                 "en": "Update PM Ark erc.where"
++             },
++             "exit_codes": {
++                 "0": {
++                     "job_status": "Completed successfully",
++                     "link_id": "760f721a-7a92-4566-8ab1-dd001038854d"
++                 }
++             },
++             "fallback_job_status": "Failed",
++             "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
++             "group": {
++                 "en": "Update PM Ark"
++             }
++         },
+          "9520386f-bb6d-4fb9-a6b6-5845ef39375f": {
+              "config": {
+                  "@manager": "linkTaskManagerChoice",
