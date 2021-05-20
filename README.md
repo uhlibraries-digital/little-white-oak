@@ -43,7 +43,7 @@ updatePmArkErcWhere_v0.0 = updatePmArkErcWhere
 
 ```
 
-Add the following configuration options to your MCPClient config `/etc/archivematica/MCPClient/clientConfig.conf`:
+Add the following configuration options to your MCPClient config `/etc/archivematica/clientConfig.conf`:
 
 ```
 [minter]
