@@ -205,7 +205,7 @@ def post_aspace(job):
     job.pyprint("Found ASpace Uri: {}".format(data['uri']))
     job.pyprint("Found ASpace digital object UUID: {}".format(data['do_uuid']))
 
-    client_config_path = '/etc/archivematica/MCPClient/clientConfig.conf'
+    client_config_path = '/etc/archivematica/clientConfig.conf'
     config = ConfigParser.SafeConfigParser()
     config.read(client_config_path)
 
