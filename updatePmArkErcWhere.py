@@ -38,7 +38,7 @@ def get_pm_ark_in_values(values):
     return ''
 
 def updatePMArk(job, uuid, ark):
-    client_config_path = '/etc/archivematica/MCPClient/clientConfig.conf'
+    client_config_path = '/etc/archivematica/clientConfig.conf'
     config = ConfigParser.SafeConfigParser()
     config.read(client_config_path)
 
