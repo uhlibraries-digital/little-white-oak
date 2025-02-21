@@ -4,7 +4,7 @@ A collection of Archivematica scripts to handle SIP ingests
 
 ## Requirements
 
-Archivematica 1.12
+Archivematica 1.17
 
 ## updatePmArkErcWhere.py
 
@@ -33,7 +33,7 @@ Copy `updatePmArkErcWhere.py` and `postPmArkToArchivesSpace.py` to `/usr/lib/arc
 
 Patch `/usr/lib/archivematica/MCPServer/assets/workflow.json` with the following command:
 
-`patch -c /usr/lib/archivematica/MCPServer/assets/workflow.json -i workflow.patch`
+`patch -b /usr/lib/archivematica/MCPServer/assets/workflow.json workflow.patch`
 
 Add the following lines to `/usr/lib/archivematica/MCPClient/archivematicaClientModules` under `[supportedCommands]`:
 
