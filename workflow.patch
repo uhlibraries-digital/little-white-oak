@@ -1,100 +1,258 @@
-*** workflow.json.orig
---- workflow.json
-***************
-*** 5397,5407 ****
-              "exit_codes": {
-                  "0": {
-                      "job_status": "Completed successfully",
-!                     "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
-                  }
-              },
-              "fallback_job_status": "Failed",
-!             "fallback_link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09",
-              "group": {
-                  "en": "Add README file",
-                  "ja": "READMEファイルを追加",
---- 5397,5407 ----
-              "exit_codes": {
-                  "0": {
-                      "job_status": "Completed successfully",
-!                     "link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd"
-                  }
-              },
-              "fallback_job_status": "Failed",
-!             "fallback_link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd",
-              "group": {
-                  "en": "Add README file",
-                  "ja": "READMEファイルを追加",
-***************
-*** 7062,7067 ****
---- 7062,7095 ----
-                  "sv": "Bearbeta metadatamapp"
-              }
-          },
-+         "760f721a-7a92-4566-8ab1-dd001038854d": {
-+             "config": {
-+                 "@manager": "linkTaskManagerDirectories",
-+                 "@model": "StandardTaskConfig",
-+                 "arguments": "\"%SIPDirectory%\"",
-+                 "execute": "postPmArkToArchivesSpace_v0.0",
-+                 "filter_file_end": null,
-+                 "filter_file_start": null,
-+                 "filter_subdir": null,
-+                 "stderr_file": null,
-+                 "stdout_file": null
-+             },
-+             "description": {
-+                 "en": "Post PM Ark to ArchivesSpace"
-+             },
-+             "exit_codes": {
-+                 "0": {
-+                     "job_status": "Completed successfully",
-+                     "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
-+                 }
-+             },
-+             "fallback_job_status": "Failed",
-+             "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
-+             "group": {
-+                 "en": "Update PM Ark"
-+             }
-+ 
-+         },
-          "7677d1cd-2211-4969-8c10-5ec2a93d5c2f": {
-              "config": {
-                  "@manager": "linkTaskManagerDirectories",
-***************
-*** 8395,8400 ****
---- 8423,8455 ----
-                  "sv": "Ladda upp DIP"
-              }
-          },
-+         "93ab3b4b-57d3-41b1-8d33-f380c248eebd": {
-+             "config": {
-+                 "@manager": "linkTaskManagerDirectories",
-+                 "@model": "StandardTaskConfig",
-+                 "arguments": "\"%SIPDirectory%\" \"%SIPUUID%\"",
-+                 "execute": "updatePmArkErcWhere_v0.0",
-+                 "filter_file_end": null,
-+                 "filter_file_start": null,
-+                 "filter_subdir": null,
-+                 "stderr_file": null,
-+                 "stdout_file": null
-+             },
-+             "description": {
-+                 "en": "Update PM Ark erc.where"
-+             },
-+             "exit_codes": {
-+                 "0": {
-+                     "job_status": "Completed successfully",
-+                     "link_id": "760f721a-7a92-4566-8ab1-dd001038854d"
-+                 }
-+             },
-+             "fallback_job_status": "Failed",
-+             "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
-+             "group": {
-+                 "en": "Update PM Ark"
-+             }
-+         },
-          "9520386f-bb6d-4fb9-a6b6-5845ef39375f": {
-              "config": {
-                  "@manager": "linkTaskManagerChoice",
+--- workflow.json.orig	2025-02-21 08:56:58.311686874 -0600
++++ workflow.json	2025-02-21 09:12:21.812599868 -0600
+@@ -4852,69 +4852,69 @@
+           "link_id": "28a9f8a8-0006-4828-96d5-892e6e279f72"
+         }
+       },
+       "fallback_job_status": "Failed",
+       "fallback_link_id": "61c316a6-0a50-4f65-8767-1f44b1eeb6dd",
+       "group": {
+         "en": "Assign file UUIDs and checksums",
+         "es": "Asignar UUIDs y sumas de verificación a los ficheros",
+         "fr": "Attribuer un fichier UUID et des sommes de contrôle",
+         "ja": "ファイルUUIDとチェックサムの割当",
+         "no": "Tildel fil-UUID-er og sjekksummer til objekt",
+         "pt_BR": "Atribuir arquivos UUIDs e somas de verificação",
+         "sv": "Tilldela UUID:er och checksummor"
+       }
+     },
+     "523c97cc-b267-4cfb-8209-d99e523bf4b3": {
+       "config": {
+         "@manager": "linkTaskManagerDirectories",
+         "@model": "StandardTaskConfig",
+         "arguments": "\"%clientAssetsDirectory%README/README.html\" \"%SIPDirectory%README.html\"",
+         "execute": "copy_v0.0"
+       },
+       "description": {
+         "en": "Add README file",
+         "ja": "READMEファイルを追加",
+         "no": "Legg til README-fil",
+         "pt_BR": "Adicionar arquivo README",
+         "sv": "Lägg till README-fil"
+       },
+       "exit_codes": {
+         "0": {
+           "job_status": "Completed successfully",
+-          "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
++          "link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd"
+         }
+       },
+       "fallback_job_status": "Failed",
+-      "fallback_link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09",
++      "fallback_link_id": "93ab3b4b-57d3-41b1-8d33-f380c248eebd",
+       "group": {
+         "en": "Add README file",
+         "ja": "READMEファイルを追加",
+         "no": "Legg til README-fil",
+         "pt_BR": "Adicionar arquivo README",
+         "sv": "Lägg till README-fil"
+       }
+     },
+     "53e14112-21bb-46f0-aed3-4e8c2de6678f": {
+       "config": {
+         "@manager": "linkTaskManagerDirectories",
+         "@model": "StandardTaskConfig",
+         "arguments": "--baseDirectoryPath \"%SIPDirectory%\" --sipUUID \"%SIPUUID%\" --xmlFile \"%SIPDirectory%METS.%SIPUUID%.xml\"",
+         "execute": "createMETS_v2.0"
+       },
+       "description": {
+         "en": "Generate METS.xml document",
+         "es": "Generar METS.xml",
+         "fr": "Générer un document METS.xml",
+         "ja": "METS.xml文書 を生成",
+         "no": "Generer METS.xml-dokument",
+         "pt_BR": "Gerar documentos METS.xml",
+         "sv": "Skapa METS.xml dokument"
+       },
+       "exit_codes": {
+         "0": {
+           "job_status": "Completed successfully",
+           "link_id": "3e25bda6-5314-4bb4-aa1e-90900dce887d"
+         }
+       },
+       "fallback_job_status": "Failed",
+       "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
+@@ -6282,64 +6282,91 @@
+         "sv": "Normalisera"
+       }
+     },
+     "75fb5d67-5efa-4232-b00b-d85236de0d3f": {
+       "config": {
+         "@manager": "linkTaskManagerDirectories",
+         "@model": "StandardTaskConfig",
+         "arguments": "\"%SIPDirectory%\"",
+         "execute": "manualNormalizationRemoveMNDirectories_v0.0"
+       },
+       "description": {
+         "en": "Remove empty manual normalization directories",
+         "no": "Fjern tomme mapper for manuell normalisering",
+         "pt_BR": "Remover diretórios de normalização manual vazios",
+         "sv": "Ta bort tomma katalagor för manuel normalisering"
+       },
+       "exit_codes": {
+         "0": {
+           "job_status": "Completed successfully",
+           "link_id": "a2ba5278-459a-4638-92d9-38eb1588717d"
+         }
+       },
+       "fallback_job_status": "Failed",
+       "fallback_link_id": "a2ba5278-459a-4638-92d9-38eb1588717d",
+       "group": {
+         "en": "Process metadata directory",
+         "es": "Procesar directorio de metadatos",
+         "no": "Prosesser metadatamappe",
+         "pt_BR": "Processar diretório de metadados",
+         "sv": "Bearbeta metadatamapp"
+       }
+     },
++    "760f721a-7a92-4566-8ab1-dd001038854d": {
++      "config": {
++        "@manager": "linkTaskManagerDirectories",
++        "@model": "StandardTaskConfig",
++        "arguments": "\"%SIPDirectory%\"",
++        "execute": "postPmArkToArchivesSpace_v0.0",
++        "filter_file_end": null,
++        "filter_file_start": null,
++        "filter_subdir": null,
++        "stderr_file": null,
++        "stdout_file": null
++      },
++      "description": {
++        "en": "Post PM Ark to ArchivesSpace"
++      },
++      "exit_codes": {
++        "0": {
++          "job_status": "Completed successfully",
++          "link_id": "f1e286f9-4ec7-4e19-820c-dae7b8ea7d09"
++        }
++      },
++      "fallback_job_status": "Failed",
++      "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
++      "group": {
++        "en": "Update PM Ark"
++      }
++    },
+     "7677d1cd-2211-4969-8c10-5ec2a93d5c2f": {
+       "config": {
+         "@manager": "linkTaskManagerDirectories",
+         "@model": "StandardTaskConfig",
+         "arguments": "\"%SIPUUID%\" \"%sharedPath%\"",
+         "execute": "bindPIDs_v0.0",
+         "stdout_file": "%SIPLogsDirectory%handles.log"
+       },
+       "description": {
+         "en": "Bind PIDs",
+         "fr": "Lier les PIDs",
+         "no": "Bind PID-er",
+         "pt_BR": "Vincular PIDs",
+         "sv": "Lås PID:er."
+       },
+       "exit_codes": {
+         "0": {
+           "job_status": "Completed successfully",
+           "link_id": "d0dfa5fc-e3c2-4638-9eda-f96eea1070e0"
+         }
+       },
+       "fallback_job_status": "Failed",
+       "fallback_link_id": "d0dfa5fc-e3c2-4638-9eda-f96eea1070e0",
+       "group": {
+         "en": "Bind PIDs",
+         "fr": "Lier les PIDs",
+         "no": "Bind PID-er",
+         "pt_BR": "Vincular PIDs",
+         "sv": "Lås PID:er."
+       }
+     },
+     "78b7adff-861d-4450-b6dd-3fabe96a849e": {
+@@ -7586,64 +7613,91 @@
+     "92879a29-45bf-4f0b-ac43-e64474f0f2f9": {
+       "config": {
+         "@manager": "linkTaskManagerChoice",
+         "@model": "MicroServiceChainChoice",
+         "chain_choices": [
+           "0fe9842f-9519-4067-a691-8a363132ae24",
+           "3572f844-5e69-4000-a24b-4e32d3487f82",
+           "526eded3-2280-4f10-ac86-eff6c464cc81",
+           "6eb8ebe7-fab3-4e4c-b9d7-14de17625baa"
+         ]
+       },
+       "description": {
+         "en": "Upload DIP",
+         "es": "Subir DIP",
+         "fr": "Télécharger le DIP",
+         "ja": "DIPをアップロード",
+         "no": "Last opp DIP",
+         "pt_BR": "Carregar DIP",
+         "sv": "Ladda upp DIP"
+       },
+       "exit_codes": {},
+       "fallback_job_status": "Failed",
+       "group": {
+         "en": "Upload DIP",
+         "es": "Subir DIP",
+         "fr": "Télécharger le DIP",
+         "ja": "DIPをアップロード",
+         "no": "Last opp DIP",
+         "pt_BR": "Carregar DIP",
+         "sv": "Ladda upp DIP"
+       }
+     },
++    "93ab3b4b-57d3-41b1-8d33-f380c248eebd": {
++      "config": {
++        "@manager": "linkTaskManagerDirectories",
++        "@model": "StandardTaskConfig",
++        "arguments": "\"%SIPDirectory%\" \"%SIPUUID%\"",
++        "execute": "updatePmArkErcWhere_v0.0",
++        "filter_file_end": null,
++        "filter_file_start": null,
++        "filter_subdir": null,
++        "stderr_file": null,
++        "stdout_file": null
++      },
++      "description": {
++        "en": "Update PM Ark erc.where"
++      },
++      "exit_codes": {
++        "0": {
++          "job_status": "Completed successfully",
++          "link_id": "760f721a-7a92-4566-8ab1-dd001038854d"
++        }
++      },
++      "fallback_job_status": "Failed",
++      "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
++      "group": {
++        "en": "Update PM Ark"
++      }
++    },
+     "9520386f-bb6d-4fb9-a6b6-5845ef39375f": {
+       "config": {
+         "@manager": "linkTaskManagerChoice",
+         "@model": "MicroServiceChainChoice",
+         "chain_choices": [
+           "260ef4ea-f87d-4acf-830d-d0de41e6d2af",
+           "a6ed697e-6189-4b4e-9f80-29209abc7937"
+         ]
+       },
+       "description": {
+         "en": "Approve AIP reingest",
+         "fr": "Approuver la réacquisition de l'AIP",
+         "ja": "AIPの再インジェストを承認",
+         "no": "Godkjenn AIP-gjenopplasting",
+         "pt_BR": "Aprovar readmissão do AIP",
+         "sv": "Godkänn AIP reingest"
+       },
+       "exit_codes": {},
+       "fallback_job_status": "Failed",
+       "fallback_link_id": "c103b2fb-9a6b-4b68-8112-b70597a6cd14",
+       "group": {
+         "en": "Reingest AIP",
+         "fr": "Réacquistion de l’AIP",
+         "ja": "AIPの再インジェスト",
+         "no": "Gjenopplast AIP",
+         "pt_BR": "Readmitir AIP",
+         "sv": "Återingestera AIP"
+       }
+     },
+     "95616c10-a79f-48ca-a352-234cc91eaf08": {
+       "config": {
+         "@manager": "linkTaskManagerDirectories",
