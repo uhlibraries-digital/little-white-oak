@@ -1,5 +1,5 @@
 --- workflow.json.orig	2025-02-21 08:56:58.311686874 -0600
-+++ workflow.json	2025-02-21 09:12:21.812599868 -0600
++++ workflow.json	2025-02-24 16:07:57.021994153 -0600
 @@ -4852,69 +4852,69 @@
            "link_id": "28a9f8a8-0006-4828-96d5-892e6e279f72"
          }
@@ -72,7 +72,7 @@
        },
        "fallback_job_status": "Failed",
        "fallback_link_id": "7d728c39-395f-4892-8193-92f086c0546f",
-@@ -6282,64 +6282,91 @@
+@@ -6282,64 +6282,86 @@
          "sv": "Normalisera"
        }
      },
@@ -110,12 +110,7 @@
 +        "@manager": "linkTaskManagerDirectories",
 +        "@model": "StandardTaskConfig",
 +        "arguments": "\"%SIPDirectory%\"",
-+        "execute": "postPmArkToArchivesSpace_v0.0",
-+        "filter_file_end": null,
-+        "filter_file_start": null,
-+        "filter_subdir": null,
-+        "stderr_file": null,
-+        "stdout_file": null
++        "execute": "postPmArkToArchivesSpace_v0.0"
 +      },
 +      "description": {
 +        "en": "Post PM Ark to ArchivesSpace"
@@ -164,7 +159,7 @@
        }
      },
      "78b7adff-861d-4450-b6dd-3fabe96a849e": {
-@@ -7586,64 +7613,91 @@
+@@ -7586,64 +7608,86 @@
      "92879a29-45bf-4f0b-ac43-e64474f0f2f9": {
        "config": {
          "@manager": "linkTaskManagerChoice",
@@ -202,12 +197,7 @@
 +        "@manager": "linkTaskManagerDirectories",
 +        "@model": "StandardTaskConfig",
 +        "arguments": "\"%SIPDirectory%\" \"%SIPUUID%\"",
-+        "execute": "updatePmArkErcWhere_v0.0",
-+        "filter_file_end": null,
-+        "filter_file_start": null,
-+        "filter_subdir": null,
-+        "stderr_file": null,
-+        "stdout_file": null
++        "execute": "updatePmArkErcWhere_v0.0"
 +      },
 +      "description": {
 +        "en": "Update PM Ark erc.where"
