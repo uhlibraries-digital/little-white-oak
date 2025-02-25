@@ -1,14 +1,14 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Post PM Ark to ArchivesSpace
 # UUID: 16f12b79-7604-4ea3-b431-6b1797a7d588
 #
 # @author Sean Watkins <slwatkins@uh.edu>
 
-import ConfigParser
+import os
 import sys
 import re
-import urllib, urllib2
+import urllib.request, urllib.error, urllib.parse
 import json
 import uuid
 
@@ -157,10 +157,10 @@ def get_aspace_session(job):
     global aspace_endpoint, aspace_username, aspace_password
 
     url = aspace_endpoint + '/users/' + aspace_username + '/login'
-    req = urllib2.Request(url, "password=" + urllib.quote_plus(aspace_password))
+    req = urllib.request.Request(url, "password=" + urllib.parse.quote_plus(aspace_password))
     req.add_header("Content-Type",'application/x-www-form-urlencoded')
     req.get_method = lambda: 'POST'
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(req)
     data_response = response.read()
     data = json.loads(data_response)
 
@@ -175,9 +175,9 @@ def aspace_request(uri, data=None):
 
     url = aspace_endpoint + uri
 
-    req = urllib2.Request(url, data)
+    req = urllib.request.Request(url, data)
     req.add_header('X-ArchivesSpace-Session', session)
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(req)
 
     return json.loads(response.read())
 
@@ -205,14 +205,10 @@ def post_aspace(job):
     job.pyprint("Found ASpace Uri: {}".format(data['uri']))
     job.pyprint("Found ASpace digital object UUID: {}".format(data['do_uuid']))
 
-    client_config_path = '/etc/archivematica/clientConfig.conf'
-    config = ConfigParser.SafeConfigParser()
-    config.read(client_config_path)
-
-    aspace_endpoint = config.get('aspace', 'api_endpoint')
-    aspace_username = config.get('aspace', 'username')
-    aspace_password = config.get('aspace', 'password')
-    minter_base     = config.get('minter', 'base_url')
+    aspace_endpoint = os.environ.get('ASPACE_API_ENDPOINT')
+    aspace_username = os.environ.get('ASPACE_USERNAME')
+    aspace_password = os.environ.get('ASPACE_PASSWORD')
+    minter_base     = os.environ.get('MINTER_BASE_URL')
 
     session = get_aspace_session(job)
     if session == '':
