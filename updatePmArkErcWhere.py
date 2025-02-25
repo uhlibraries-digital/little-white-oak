@@ -1,14 +1,14 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Update PM Ark Erc.where to AIP download link location
 # UUID: cb2d2ba3-12e0-469c-9cc6-118aeaf48e4d
 #
 # @author Sean Watkins <slwatkins@uh.edu>
 
+import os
 import sys
 import re
-import urllib, urllib2
-import ConfigParser
+import urllib.request, urllib.error, urllib.parse
 
 import django
 django.setup()
@@ -38,19 +38,15 @@ def get_pm_ark_in_values(values):
     return ''
 
 def updatePMArk(job, uuid, ark):
-    client_config_path = '/etc/archivematica/clientConfig.conf'
-    config = ConfigParser.SafeConfigParser()
-    config.read(client_config_path)
-
-    minter_baseurl = config.get('minter', 'update_url')
-    minter_key = config.get('minter', 'api_key')
-    minter_ambaseurl = config.get('minter', 'archivematica_url')
+    minter_baseurl = os.environ.get('MINTER_UPDATE_URL')
+    minter_key = os.environ.get('MINTER_API_KEY')
+    minter_ambaseurl = os.environ.get('MINTER_ARCHIVEMATICA_URL')
 
     ercWhere = minter_ambaseurl + 'archival-storage/' + uuid + '/'
-    req = urllib2.Request(minter_baseurl + ark, "where=" + urllib.quote_plus(ercWhere))
+    req = urllib.request.Request(minter_baseurl + ark, "where=" + urllib.parse.quote_plus(ercWhere))
     req.add_header('api-key', minter_key)
     req.get_method = lambda: 'PUT'
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(req)
     job.pyprint("PM Ark Update Response: {}".format(response.read()))
 
 def update_aspace(job):
