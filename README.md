@@ -43,19 +43,22 @@ updatePmArkErcWhere_v0.0 = updatePmArkErcWhere
 
 ```
 
-Add the following configuration options to your MCPClient config `/etc/archivematica/clientConfig.conf`:
+Add the following configuration options to your MCPClient config `/etc/default/archivematica-mcp-client`:
 
 ```
-[minter]
-base_url = <Greens Base url>
-update_url = <Greens Ark api update url>
-api_key = <Greens API KEY>
-archivematica_url = <Archivematica base url>
+# Greens Ark Minter
 
-[aspace]
-api_endpoint = <ArchivesSpace API Endpoint>
-username = <ArchivesSpace username>
-password = <ArchivesSpace password>
+MINTER_BASE_URL=<Greens Base url>
+MINTER_UPDATE_URL=<Greens Ark api update url>
+MINTER_API_KEY=<Greens API KEY>
+MINTER_ARCHIVEMATICA_URL=<Archivematica base url>
+
+# ArchivesSpace
+
+ASPACE_API_ENDPOINT=<ArchivesSpace API Endpoint>
+ASPACE_USERNAME=<ArchivesSpace username>
+ASPACE_PASSWORD=<ArchivesSpace password>
+
 ```
 
 Restart Archivematica to accept the changes
