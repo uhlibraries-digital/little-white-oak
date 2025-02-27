@@ -8,7 +8,7 @@
 import os
 import sys
 import re
-import urllib.request, urllib.error, urllib.parse
+import urllib.request, urllib.parse
 
 import django
 django.setup()
@@ -43,7 +43,8 @@ def updatePMArk(job, uuid, ark):
     minter_ambaseurl = os.environ.get('MINTER_ARCHIVEMATICA_URL')
 
     ercWhere = minter_ambaseurl + 'archival-storage/' + uuid + '/'
-    req = urllib.request.Request(minter_baseurl + ark, "where=" + urllib.parse.quote_plus(ercWhere))
+    data = urllib.parse.urlencode({'where': ercWhere}).encode('utf-8')
+    req = urllib.request.Request(minter_baseurl + ark, data)
     req.add_header('api-key', minter_key)
     req.get_method = lambda: 'PUT'
     response = urllib.request.urlopen(req)
