@@ -8,7 +8,7 @@
 import os
 import sys
 import re
-import urllib.request, urllib.error, urllib.parse
+import urllib.request, urllib.parse
 import json
 import uuid
 
@@ -90,7 +90,7 @@ def post_pm_ark(job, data):
     if has_pm_ark(digital_object['file_versions'], data['ark']):
         job.pyprint("Archival Object already has a PM Ark of {}".format(data['ark']))
         return 0
-    
+
     digital_object['file_versions'].append({
         "jsonmodel_type": "file_version",
         "is_representative": False,
@@ -150,14 +150,15 @@ def get_digital_object(instances, uuid):
             do = aspace_request(instance['digital_object']['ref'])
             if do['digital_object_id'] == uuid:
                 return do
-    
+
     return None
 
 def get_aspace_session(job):
     global aspace_endpoint, aspace_username, aspace_password
 
     url = aspace_endpoint + '/users/' + aspace_username + '/login'
-    req = urllib.request.Request(url, "password=" + urllib.parse.quote_plus(aspace_password))
+    url_data = urllib.parse.urlencode({'password': aspace_password}).encode('utf-8')
+    req = urllib.request.Request(url, url_data)
     req.add_header("Content-Type",'application/x-www-form-urlencoded')
     req.get_method = lambda: 'POST'
     response = urllib.request.urlopen(req)
