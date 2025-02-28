@@ -43,7 +43,7 @@ def updatePMArk(job, uuid, ark):
     minter_ambaseurl = os.environ.get('MINTER_ARCHIVEMATICA_URL')
 
     ercWhere = minter_ambaseurl + 'archival-storage/' + uuid + '/'
-    data = urllib.parse.urlencode({'where': ercWhere}).encode('utf-8')
+    data = urllib.parse.urlencode({'where': ercWhere}).encode()
     req = urllib.request.Request(minter_baseurl + ark, data)
     req.add_header('api-key', minter_key)
     req.get_method = lambda: 'PUT'
