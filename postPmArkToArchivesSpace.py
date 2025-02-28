@@ -107,12 +107,12 @@ def post_pm_ark(job, data):
 
     if new_digital_object:
         try:
-            response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', json.dumps(digital_object))
+            response_do = aspace_request(archival_object['repository']['ref'] + '/digital_objects', digital_object)
         except UnicodeDecodeError:
             job.pyprint("Unable to post digital object. You have non-utf8 characters in you metadata.csv file: {}".format(digital_object),file=sys.stderr)
             return 1
-        except:
-            job.pyprint ("Unable to post digital object, make sure it doesn't already exist elsewhere in ASpace",file=sys.stderr)
+        except Exception as e:
+            job.pyprint (f"Unable to post digital object, make sure it doesn't already exist elsewhere in ASpace: {e}",file=sys.stderr)
             return 1
 
         archival_object['instances'].append({
@@ -124,11 +124,11 @@ def post_pm_ark(job, data):
             "is_representative": False
         })
 
-        response = aspace_request(data['uri'], json.dumps(archival_object))
+        response = aspace_request(data['uri'], archival_object)
     else:
         try:
             job.pyprint("Updating digital object with UUID: {}".format(data['do_uuid']))
-            response_do = aspace_request(digital_object['uri'], json.dumps(digital_object))
+            response_do = aspace_request(digital_object['uri'], digital_object)
         except:
             job.pyprint("Unable to update digital object: {}".format(digital_object),file=sys.stderr)
             return 1
@@ -157,10 +157,8 @@ def get_aspace_session(job):
     global aspace_endpoint, aspace_username, aspace_password
 
     url = aspace_endpoint + '/users/' + aspace_username + '/login'
-    url_data = urllib.parse.urlencode({'password': aspace_password}).encode('utf-8')
+    url_data = urllib.parse.urlencode({'password': aspace_password}).encode()
     req = urllib.request.Request(url, url_data)
-    req.add_header("Content-Type",'application/x-www-form-urlencoded')
-    req.get_method = lambda: 'POST'
     response = urllib.request.urlopen(req)
     data_response = response.read()
     data = json.loads(data_response)
@@ -177,11 +175,14 @@ def aspace_request(uri, data=None):
     url = aspace_endpoint + uri
 
     req = urllib.request.Request(url, data)
+    if data is not None:
+        data = json.dumps(data).encode()
+        req = urllib.request.Request(url, data)
+        req.add_header("Content-Type",'application/json')
     req.add_header('X-ArchivesSpace-Session', session)
     response = urllib.request.urlopen(req)
 
     return json.loads(response.read())
-
 
 def post_aspace(job):
     global aspace_endpoint, aspace_username, aspace_password, minter_base, session
